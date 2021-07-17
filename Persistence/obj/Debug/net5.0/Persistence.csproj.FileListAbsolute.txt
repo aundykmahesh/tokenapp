@@ -1,0 +1,15 @@
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/bin/Debug/net5.0/Persistence.deps.json
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/bin/Debug/net5.0/Persistence.dll
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/bin/Debug/net5.0/ref/Persistence.dll
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/bin/Debug/net5.0/Persistence.pdb
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/bin/Debug/net5.0/Domain.dll
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/bin/Debug/net5.0/Domain.pdb
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.csproj.AssemblyReference.cache
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.GeneratedMSBuildEditorConfig.editorconfig
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.AssemblyInfoInputs.cache
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.AssemblyInfo.cs
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.csproj.CoreCompileInputs.cache
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.csproj.CopyComplete
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.dll
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/ref/Persistence.dll
+/Users/akmahesh/Projects/TokenManagementApp/Persistence/obj/Debug/net5.0/Persistence.pdb
