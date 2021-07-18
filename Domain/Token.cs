@@ -18,6 +18,6 @@ namespace Domain
 
     public enum TokenStatus
     {
-        enabled, expired, disabled
+        enabled=0, expired=1, disabled=2
     }
 }

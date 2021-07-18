@@ -24,13 +24,12 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers(options => 
-               { 
+            services.AddControllers(options =>
+               {
                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                    options.Filters.Add(new AuthorizeFilter(policy));
                }
             );
-            //services.AddControllers();
             services.AddApplicationServices(Configuration);
             services.AddIdentityServices(Configuration);
         }
@@ -48,6 +47,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();

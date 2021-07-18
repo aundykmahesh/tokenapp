@@ -20,6 +20,15 @@ namespace API.Extentions
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection"))
             );
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", corsoptions =>
+                {
+                    corsoptions.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                });
+            }
+                );
+
             return services;
         }
     }

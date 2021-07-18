@@ -29,11 +29,11 @@ namespace API.Controllers
         }
         [HttpPost("generate")]
         [Authorize]
-        public async Task<ActionResult<Token>> GenerateToken([FromBody] string appurl)
+        public async Task<ActionResult<Token>> GenerateToken([FromBody] TokenFormModel tokenmodel)
         {
-            if (appurl == null) return BadRequest("Invalid test request parameters");
+            if (tokenmodel == null) return BadRequest("Invalid test request parameters");
 
-            if (GetTokenFromURL(appurl).Result != null)
+            if (GetTokenFromURL(tokenmodel.appUrl).Result != null)
             {
                 return BadRequest("Failed to generate API token");
             }
@@ -46,12 +46,12 @@ namespace API.Controllers
                     Status = TokenStatus.enabled,
                     TokenString = _tokenService.CreateAPIToken(),
                     CreatedDate = DateTime.Now.Date,
-                    AppUrl = appurl
+                    AppUrl = tokenmodel.appUrl
                 };
 
                 await _dataContext.Tokens.AddAsync(token);
                 await _dataContext.SaveChangesAsync();
-                return Ok("API token generated");
+                return Ok(token);
             }
             catch (System.Exception ex)
             {
@@ -95,11 +95,11 @@ namespace API.Controllers
             return await _dataContext.Tokens.ToListAsync();
         }
 
-        [HttpPut("disabletoken")]
+        [HttpPost("disabletoken")]
         [Authorize]
-        public async Task<IActionResult> DisableToken(TokenValidateModel tokenValidateModel)
+        public async Task<IActionResult> DisableToken(Guid tokenId)
         {
-            var token = await GetToken(tokenValidateModel);
+            var token = await _dataContext.Tokens.FirstAsync(c=>c.Guid==tokenId);
             token.Status = TokenStatus.disabled;
             var result = await _dataContext.SaveChangesAsync() > 0;
 

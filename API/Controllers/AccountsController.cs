@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Models;
 using API.Services;
@@ -52,10 +53,22 @@ namespace API.Controllers
             return Unauthorized();
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserModel>> GetCurrentUser()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            return CreateUserObject(user);
+        }
 
-
-        // private UserModel CreateUser(UserModel userModel){
-
-        // }
+        private UserModel CreateUserObject(User appUser)
+        {
+            return new UserModel
+            {
+                DisplayName = appUser.DisplayName,
+                Token = _jWTTokenService.CreateJWTToken(appUser),
+                UserName = appUser.UserName
+            };
+        }
     }
 }
