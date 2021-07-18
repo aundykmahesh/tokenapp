@@ -8,7 +8,7 @@ import * as Yup from "yup";
 
 export default function CreateToken(){
     const{tokenstore} = useStore();
-    const { tokens, submitting , generateToken} = tokenstore;
+    const { generateToken} = tokenstore;
 
     const ValidationSchema = Yup.object({
         url: Yup.string().required("The URL is required").url("Should be of proper URL format")

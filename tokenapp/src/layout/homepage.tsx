@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Header, Segment, Image, Button } from "semantic-ui-react";
+import { Container, Header, Segment, Button } from "semantic-ui-react";
 import { useStore } from "../stores/stores";
 
 export default observer(function HomePage() {

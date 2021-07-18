@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { string } from "yup";
 import { history } from "..";
 import { Token, TokenFormValue } from "../models/tokenmodel";
 import { User, UserFormValues } from "../models/user";
@@ -76,6 +75,7 @@ const Tokens = {
     list: () => requests.get<Token[]>('/token/tokens'),
     generatetoken: (urlval: TokenFormValue) => requests.post<Token>('/token/generate', urlval),
     disabletoken: (tokenid: string) => requests.post(`/token/disabletoken?tokenid=${tokenid}`, tokenid),
+    enabletoken: (tokenid: string) => requests.post(`/token/enabletoken?tokenid=${tokenid}`, tokenid),
     validatetoken: (token: TokenFormValue) => requests.post('/token/validate', token)
 }
 

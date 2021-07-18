@@ -45,7 +45,7 @@ namespace API.Controllers
                     Guid = new System.Guid(),
                     Status = TokenStatus.enabled,
                     TokenString = _tokenService.CreateAPIToken(),
-                    CreatedDate = DateTime.Now.Date,
+                    CreatedDate = DateTime.Now,
                     AppUrl = tokenmodel.appUrl
                 };
 
@@ -79,6 +79,10 @@ namespace API.Controllers
                 results.Status == TokenStatus.disabled ||
                 results.CreatedDate.AddDays(7) < DateTime.Now)
             {
+                if (results.CreatedDate.AddDays(7) < DateTime.Now)
+                {
+                    await ExpireToken(results.Guid);
+                }
                 return BadRequest("API token  expired");
             }
             else
@@ -108,6 +112,20 @@ namespace API.Controllers
             return Ok();
         }
 
+ [      HttpPost("enabletoken")]
+        [Authorize]
+        public async Task<IActionResult> EnableToken(Guid tokenId)
+        {
+            var token = await _dataContext.Tokens.FirstAsync(c=>c.Guid==tokenId);
+            token.Status = TokenStatus.enabled;
+            token.CreatedDate = DateTime.Now;
+            var result = await _dataContext.SaveChangesAsync() > 0;
+
+            if(!result) return BadRequest("Update Failed");
+
+            return Ok();
+        }
+
         private async Task<Token> GetTokenFromURL(string url)
         {
             var results = await _dataContext.Tokens.AsQueryable().Where(c => c.AppUrl == url).ToListAsync();
@@ -122,6 +140,17 @@ namespace API.Controllers
             }
 
             return await GetTokenFromURL(tokenValidateModel.appUrl);
+        }
+
+        private async Task<ActionResult> ExpireToken(Guid tokenId)
+        {
+            var token = await _dataContext.Tokens.FirstAsync(c=>c.Guid==tokenId);
+            token.Status = TokenStatus.expired;
+            var result = await _dataContext.SaveChangesAsync() > 0;
+
+            if(!result) return BadRequest("Update Failed");
+
+            return Ok();
         }
     }
 }

@@ -3,7 +3,7 @@ import { Container } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 
 import { ToastContainer } from 'react-toastify';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useStore } from '../stores/stores';
 import homepage from './homepage';
 import LoginForm from './LoginForm';
@@ -12,7 +12,6 @@ import NavigationBar from './NavigationBar';
 
 
 function App() {
-  const location = useLocation();
   const {userstore, commonstore} = useStore();
 
   useEffect(() => {

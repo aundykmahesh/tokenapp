@@ -1,6 +1,4 @@
-import { url } from "inspector";
-import { makeAutoObservable, makeObservable, runInAction } from "mobx";
-import React from "react";
+import { makeAutoObservable} from "mobx";
 import agent from "../API/agent";
 import { Token, TokenFormValue } from "../models/tokenmodel";
 
@@ -9,6 +7,7 @@ export default class TokenStore {
     loading = false;
     submitting = false;
     tokens: Token[] = [];
+    paginatedTokens : Token[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -22,16 +21,19 @@ export default class TokenStore {
         this.submitting = status;
     }
 
-    // get getAllTokens(){
-    //     return this.tokens;
-    // }
+    loadPaginatedTokens = (pagenumber : number) => {
+        console.log(pagenumber);
+        console.log(this.tokens.length)
+        this.paginatedTokens = this.tokens.slice((pagenumber-1)*10,(pagenumber)*10);
+        console.log(this.paginatedTokens);
+    }
 
     loadAllTokens = async () => {
         this.setLoadingStatus(true);
         try {
             await agent.Tokens.list().then(response => {
                 //let activty: Activity[] = [];
-
+                this.tokens = [];
                 response.forEach(element => {
                     this.setToken(element);
                 });
@@ -62,6 +64,8 @@ export default class TokenStore {
     setToken = (element: Token) => {
         //activty.push(element);
         //this.tokenRegistry.set(element.id, element);
+        // const date = format(element.createdDate!, 'dd MMM yyyy');
+        // element.createdDate = new Date(date);
         element.status = this.setTokenStatus(element.status);
         this.tokens.push(element);
         // console.log(this.tokens.length);
@@ -71,7 +75,20 @@ export default class TokenStore {
         this.setSubmittingStatus(true);
         try {
             await agent.Tokens.disabletoken(tokenid);
-            this.tokens.find(c => c.guid == tokenid)!.status = this.setTokenStatus("2");
+            this.tokens.find(c => c.guid === tokenid)!.status = this.setTokenStatus("2");
+            this.setSubmittingStatus(false);
+        }
+        catch (error) {
+            console.log(error);
+            this.setSubmittingStatus(false);
+        }
+    }
+
+    enableToken = async (tokenid: string) => {
+        this.setSubmittingStatus(true);
+        try {
+            await agent.Tokens.enabletoken(tokenid);
+            this.tokens.find(c => c.guid === tokenid)!.status = this.setTokenStatus("0");
             this.setSubmittingStatus(false);
         }
         catch (error) {
@@ -85,5 +102,7 @@ export default class TokenStore {
         if (status == "1") return "Expired";
         return "Disabled";
     }
+
+
 
 }
