@@ -16,9 +16,9 @@ export default observer(function TokensDashboard() {
     const { user } = userstore;
     const [target, setTarget] = useState('');
 
-    useEffect(() => {
-        if (tokenstore.tokens.length <= 1) loadAllTokens();
-    }, [tokenstore.tokens.length, loadAllTokens])
+    // useEffect(() => {
+    //     if (tokenstore.tokens.length <= 1) loadAllTokens();
+    // }, [tokenstore.tokens.length, loadAllTokens])
 
     useEffect(() => {
        tokenstore.loadPaginatedTokens(1);

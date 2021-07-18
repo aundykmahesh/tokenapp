@@ -5,8 +5,7 @@ import { Token, TokenFormValue } from "../models/tokenmodel";
 import { User, UserFormValues } from "../models/user";
 import { store } from "../stores/stores";
 
-axios.defaults.baseURL = "http://localhost:5001/api";
-
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
         setTimeout(resolve, delay);
@@ -22,8 +21,7 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response => {
-
-    await sleep(1000);
+    if(process.env.NODE_ENV=="development") await sleep(1000);
     return response;
 }, (error: AxiosError) => {
     const { data, status, config } = error.response!;

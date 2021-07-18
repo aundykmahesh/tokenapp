@@ -21,11 +21,9 @@ export default class TokenStore {
         this.submitting = status;
     }
 
-    loadPaginatedTokens = (pagenumber : number) => {
-        console.log(pagenumber);
-        console.log(this.tokens.length)
+    loadPaginatedTokens = async (pagenumber : number) => {
+        if(this.tokens.length==0) await this.loadAllTokens();
         this.paginatedTokens = this.tokens.slice((pagenumber-1)*10,(pagenumber)*10);
-        console.log(this.paginatedTokens);
     }
 
     loadAllTokens = async () => {
