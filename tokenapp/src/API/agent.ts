@@ -14,8 +14,6 @@ const sleep = (delay: number) => {
 
 //this adds token to all header if logged in
 axios.interceptors.request.use(config => {
-    console.log("indise axios");
-    console.log(store.commonstore.token)
     if(store.commonstore.token) {
         config.headers.Authorization = `Bearer ${store.commonstore.token}`
     }
