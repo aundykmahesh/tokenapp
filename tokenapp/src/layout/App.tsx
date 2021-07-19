@@ -36,10 +36,6 @@ function App() {
             <NavigationBar />
             <Container style={{ marginTop: '7em' }}>
               <Switch>
-              {/* <Route exact path="/activities" component={Token} />
-              <Route key={location.key} path={["/createactivity", "/manage/:id"]} component={ActivityFom} />
-              <Route path="/Errors" component={TestErrors} />
-              <Route path="/server-error" component={ServerError} /> */}
               <Route exact path="/tokens" component={TokensDashboard} />
               <Route path="/login" component={LoginForm} />
 

@@ -22,7 +22,7 @@ namespace API.Extentions
             .AddEntityFrameworkStores<DataContext>()
             .AddSignInManager<SignInManager<User>>();
 
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Utilities.GetTokenKey(configuration)));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Utilities.GetTokenKey(configuration)));
 
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
@@ -35,8 +35,6 @@ namespace API.Extentions
                     ValidateAudience = false
                 };
             });
-            //token has to be generated per scope
-            services.AddScoped<TokenService>();
             return services;
         }
     }

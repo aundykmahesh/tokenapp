@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent } from 'react'
-import { Menu, Pagination } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 import { useStore } from '../stores/stores'
 
 interface Props{
@@ -19,7 +19,6 @@ if(tokenarranylength%10>0) totalpages +=1;
 let index=0;
 let menuitems=[];
 for (index = 1; index <= totalpages; index++) {
-  var local=index;
   menuitems.push(<Menu.Item as='a' key={index} name={index.toString()} 
     onClick={(e) => { handleActivityChangeStatus(e) }}>
       {index}

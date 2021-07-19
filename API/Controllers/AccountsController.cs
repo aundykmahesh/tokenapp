@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Models;
@@ -14,15 +16,16 @@ namespace API.Controllers
     [AllowAnonymous]
     public class AccountsController : ControllerBase
     {
-        private readonly TokenService _jWTTokenService;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IAccountService _accountservice;
 
-        public AccountsController(TokenService jWTTokenService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountsController(UserManager<User> userManager, 
+            SignInManager<User> signInManager, IAccountService accountservice)
         {
-            _jWTTokenService = jWTTokenService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _accountservice = accountservice;
         }
         [HttpPost("login")]
         public async Task<ActionResult<UserModel>> Login(LoginModel loginModel)
@@ -47,7 +50,7 @@ namespace API.Controllers
                     DisplayName = user.DisplayName,
                     Id = new System.Guid(),
                     UserName = user.UserName,
-                    Token = _jWTTokenService.CreateJWTToken(user)
+                    Token = _accountservice.CreateJWTToken(user)
                 };
             }
             return Unauthorized();
@@ -58,17 +61,8 @@ namespace API.Controllers
         public async Task<ActionResult<UserModel>> GetCurrentUser()
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            return CreateUserObject(user);
+            return _accountservice.CreateUserObject(user);
         }
 
-        private UserModel CreateUserObject(User appUser)
-        {
-            return new UserModel
-            {
-                DisplayName = appUser.DisplayName,
-                Token = _jWTTokenService.CreateJWTToken(appUser),
-                UserName = appUser.UserName
-            };
-        }
     }
 }

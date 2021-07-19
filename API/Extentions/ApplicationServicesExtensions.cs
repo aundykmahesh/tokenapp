@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
-
+using API.Services;
 
 namespace API.Extentions
 {
@@ -28,6 +28,9 @@ namespace API.Extentions
                 });
             }
                 );
+
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAccountService,AccountService>();
 
             return services;
         }

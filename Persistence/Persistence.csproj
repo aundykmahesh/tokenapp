@@ -12,6 +12,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+      <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+
   </PropertyGroup>
 
 </Project>

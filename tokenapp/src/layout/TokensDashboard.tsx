@@ -1,9 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { Button, Icon, Menu, Segment, Table } from 'semantic-ui-react'
+import { Button, Segment, Table } from 'semantic-ui-react'
 import { useStore } from '../stores/stores'
 import LoadingComponent from './loadcomponent';
-import { history } from "..";
 import CreateToken from './Form/CreateToken';
 import PaginationForToken from './Pagination';
 
@@ -12,8 +11,7 @@ import PaginationForToken from './Pagination';
 
 export default observer(function TokensDashboard() {
     const { tokenstore, userstore,commonstore } = useStore();
-    const { loadAllTokens, paginatedTokens: tokens, disableToken, submitting} = tokenstore;
-    const { user } = userstore;
+    const { paginatedTokens: tokens, disableToken, submitting} = tokenstore;
     const [target, setTarget] = useState('');
 
     // useEffect(() => {
@@ -22,9 +20,9 @@ export default observer(function TokensDashboard() {
 
     useEffect(() => {
        tokenstore.loadPaginatedTokens(1);
-    }, [tokenstore.loadPaginatedTokens])
+    }, [tokenstore.loadPaginatedTokens,tokenstore])
 
-    if (user == null) history.push('/');
+    //if (user == null) history.push('/');
 
     if (tokenstore.loading) return <LoadingComponent content='Loading app......' />
 
