@@ -20,7 +20,6 @@ export default function TokenList(){
         }
     }
 
-
     return(
         <Table celled>
         <Table.Header>
